@@ -1,0 +1,64 @@
+# Helpful aliases
+alias c='clear' # clear terminal
+alias h='history' 
+alias hg='history | grep $1'
+#alias l='eza -lh --icons=auto' # long list
+#alias ld='eza -lhD --icons=auto' # long list dirs
+#alias un='$aurhelper -Rns' # uninstall package
+#alias up='$aurhelper -Syu' # update system/package/aur
+#alias pl='$aurhelper -Qs' # list installed package
+#alias pa='$aurhelper -Ss' # list available package
+#alias pc='$aurhelper -Sc' # remove unused cache
+#alias po='$aurhelper -Qtdq | $aurhelper -Rns -' # remove unused packages, also try > $aurhelper -Qqd | $aurhelper -Rsu --print -
+#alias vc='code' # gui code editor
+alias reload="source ~/.zshrc"
+alias p10k="p10k configure"
+alias zshrc="vi ~/.zshrc; reload"
+alias status="sudo systemctl status $1"
+alias enable="sudo systemctl enable $1"
+alias restart="sudo systemctl restart $1"
+alias disable="sudo systemctl disable $1"
+alias home='printf "%s\n" "$HOME"'
+alias path='printf "%s\n" "$PATH"'
+alias update="sudo apt update && sudo apt upgrade -y"
+alias vc="code ."
+alias bye='sudo shutdown -r now'
+alias wg='wget -c '  
+alias untar='tar -zxvf $1'
+alias tar='tar -czvf $1'
+alias now='date +"%T"'
+alias nowtime=now
+alias nowdate='date +"%d-%m-%Y"'
+# Directory navigation shortcuts
+alias ..='cd ..'
+alias ...='cd ../..'
+alias .3='cd ../../..'
+alias .4='cd ../../../..'
+alias .5='cd ../../../../..'
+
+# Always mkdir a path (this doesn't inhibit functionality to make a single dir)
+alias mkdir='mkdir -p'
+#alias -s txt=nano
+alias install="sudo apt-get install $1"
+alias remove="sudo install -R $1 $2 $3"
+alias ls="eza -a --icons"
+alias ll='eza -al --icons'
+alias lt='eza -a --tree --level=3  --icons'
+ 
+
+
+# git aliases
+#alias ga='git add'
+#alias gaa='git add all'
+#alias gco='git checkout'
+#alias gcb='git checkout -b'
+#alias gcmsg='git commit --message'
+#alias gd='git diff'
+#alias gl='git pull'
+#alias gp='git push'
+#alias gpsup='git push --set-upstream origin $(git_current_branch)'
+#alias gst='git status'
+alias gc='git commit -m'
+alias gp='git'
+alias gpu='git'
+alias gl='git log --oneline' 
