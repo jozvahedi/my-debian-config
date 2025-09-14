@@ -14,7 +14,6 @@ golang
 eza
 battery
 docker-compose
-
 )
 source   $ZSH/oh-my-zsh.sh
 #POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
@@ -26,10 +25,17 @@ source "${ZINIT_HOME}/zinit.zsh"
 
 
 zinit light Aloxaf/fzf-tab
-
+#Alias Part
+# if user is not root, pass all commands via sudo #
+if [ $UID -ne 0 ]; then
+    alias reboot='sudo reboot'
+    alias update='sudo apt-get upgrade'
+fi
 source $HOME/.alias
-source ~/.profile
-source ~/.p10k.zsh
+source $HOME/.aliasDocker
+source $HOME/.aliasGo
+source $HOME/.profile
+source $HOME/.p10k.zsh
 
 #source <(fzf --zsh)
 #neofetch
