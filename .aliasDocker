@@ -1,0 +1,246 @@
+ # Usage:                                                             #
+#     daws <svc> <cmd> <opts> : aws cli in docker with <svc> <cmd> <opts>  #
+#     dc             : docker compose                                      #
+#     dcu            : docker compose up -d                                #
+#     dcd            : docker compose down                                 #
+#     dcr            : docker compose run                                  #
+#     dex <container>: execute a bash shell inside the RUNNING <container> #
+#     di <container> : docker inspect <container>                          #
+#     dim            : docker images                                       #
+#     dip            : IP addresses of all running containers              #
+#     dl <container> : docker logs -f <container>                          #
+#     dnames         : names of all running containers                     #
+#     dps            : docker ps                                           #
+#     dpsa           : docker ps -a                                        #
+#     drmc           : remove all exited containers                        #
+#     drmid          : remove all dangling images                          #
+#     drun <image>   : execute a bash shell in NEW container from <image>  #
+#     dsr <container>: stop then remove <container>                        #
+#                                                                          #
+############################################################################
+
+function dnames-fn {
+	for ID in `docker ps | awk '{print $1}' | grep -v 'CONTAINER'`
+	do
+    	docker inspect $ID | grep Name | head -1 | awk '{print $2}' | sed 's/,//g' | sed 's%/%%g' | sed 's/"//g'
+	done
+}
+
+function dip-fn {
+    echo "IP addresses of all named running containers"
+
+    for DOC in `dnames-fn`
+    do
+        IP=`docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}' "$DOC"`
+        OUT+=$DOC'\t'$IP'\n'
+    done
+    echo -e $OUT | column -t
+    unset OUT
+}
+
+function dex-fn {
+	docker exec -it $1 ${2:-bash}
+}
+
+function di-fn {
+	docker inspect $1
+}
+
+function dl-fn {
+	docker logs -f $1
+}
+
+function drun-fn {
+	docker run -it $1 $2
+}
+
+function dcr-fn {
+	docker compose run $@
+}
+
+function dsr-fn {
+	docker stop $1;docker rm $1
+}
+
+function drmc-fn {
+       docker rm $(docker ps --all -q -f status=exited)
+}
+
+function drmid-fn {
+       imgs=$(docker images -q -f dangling=true)
+       [ ! -z "$imgs" ] && docker rmi "$imgs" || echo "no dangling images."
+}
+
+# in order to do things like dex $(dlab label) sh
+function dlab {
+       docker ps --filter="label=$1" --format="{{.ID}}"
+}
+
+function dc-fn {
+        docker compose $*
+}
+
+function d-aws-cli-fn {
+    docker run \
+           -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+           -e AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION \
+           -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+           amazon/aws-cli:latest $1 $2 $3
+}
+
+alias daws=d-aws-cli-fn
+alias dc=dc-fn
+alias dcu="docker compose up -d"
+alias dcd="docker compose down"
+alias dcr=dcr-fn
+alias dex=dex-fn
+alias di=di-fn
+alias dim="docker images"
+alias dip=dip-fn
+alias dl=dl-fn
+alias dnames=dnames-fn
+alias dps="docker ps"
+alias dpsa="docker ps -a"
+alias drmc=drmc-fn
+alias drmid=drmid-fn
+alias drun=drun-fn
+alias dsp="docker system prune --all"
+alias dsr=dsr-fn
+#####
+alias dr="docker"
+alias drreset="sudo docker system prune"
+alias dri="sudo docker images"
+alias drpl="sudo docker pull"
+alias drps="sudo docker ps"
+alias drpu="sudo docker push"
+alias drr="sudo docker run"
+alias drs="sudo docker search"
+alias drcl="sudo docker container ls"
+alias drforce="sudo docker-compose up --force-recreate -d"
+
+alias pgstart="echo 'starting PostgreSQL...' && \
+    echo && \
+    sudo docker start postgresql && \
+    sudo docker ps -f name=postgresql && \
+    echo && \
+    echo 'PostgreSQL docker container started...' && \
+    echo 'starting pgAdmin4...' && \
+    sudo docker start pgAdmin && \
+    echo 'Username: pguser' && \
+    echo 'Password: pgpass' && \
+    ip=\$(sudo docker inspect postgresql | grep -Po '\"IPAddress\":\s*\"\K[0-9.]+(?=\")' | head -n 1) && \
+    pgadmin_ip=\$(sudo docker inspect pgAdmin | grep -Po '\"IPAddress\":\s*\"\K[0-9.]+(?=\")' | head -n 1) && \
+    echo 'Postgres IP Address: ' \$ip && \
+    echo && \
+    echo 'pgAdmin IP Address: ' \$pgadmin_ip && \
+    echo 'E-mail: drunkleen@local.com ' && \
+    echo 'Password: 12345' && \
+    echo 'IP Address: ' \$ip && \
+    echo && \
+    echo 'PostgreSQL connection string: postgres://pguser:pgpass@'\$ip':5432/DatabaseName' && \
+    echo 'pgAdmin4 URL: http://'\$pgadmin_ip':80' && \
+    echo"
+
+alias pgstop="echo 'stopping PostgreSQL...' && \
+    echo && \
+    sudo docker stop postgresql && \
+    echo 'PostgreSQL docker container stopped...' && \
+    sudo docker stop pgAdmin && \
+    echo 'pgAdmin4 docker container stopped...'"
+
+
+alias mongostart=" echo 'starting MongoDB...' && \
+    echo && \
+    sudo docker start mongodb && \
+    sudo docker ps -f name=mongodb && \
+    echo && \
+    echo 'mongoDB docker container started...' && \
+    echo 'URL: mongodb://localhost:27017' && \
+    echo 'IP Address: 127.0.0.1'"
+
+
+alias mongostop=" echo 'stopping MongoDB...' && \
+    echo && sudo docker stop mongodb && \
+    echo 'mongoDB docker container stopped...'"
+
+alias phpstart="echo 'starting MySQL_Apache_Php...' && \
+    echo && \
+    sudo docker start mysql && \
+    echo 'MySQL docker container started...' && \
+    sudo docker start apache && \
+    echo 'apache docker container started...' && \
+    sudo docker start php && \
+    echo 'php docker container started...' && \
+    sudo docker ps  && \
+    echo && \
+     sudo docker start phpmyadmin && \
+    echo 'phpmyadmin docker container started...' && \
+    sudo docker ps  && \
+    echo && \
+    echo 'Mysql Specifications:' && \
+    echo 'Username: otherUser' && \
+    echo 'Password: password' && \
+    echo 'Mysql Name: dbtest' && \
+    echo 'Mysql Root Password: rootpassword' && \
+    echo && \
+    ip=\$(sudo docker inspect mysql | grep -Po '\"IPAddress\":\s*\"\K[0-9.]+(?=\")' | head -n 1) && \
+    echo 'Mysql IP Address: ' \$ip':3306' && \
+    php_ip=\$(sudo docker inspect php | grep -Po '\"IPAddress\":\s*\"\K[0-9.]+(?=\")' | head -n 1) && \
+    echo 'php IP Address: ' \$php_ip':80' && \
+    echo"
+
+alias phpstop="echo 'stopping MySQL...' && \
+    sudo docker stop mysql && \
+    echo 'mysql docker container stopped...' && \
+    echo && \
+    echo 'stopping Apache...' && \
+    sudo docker stop apache && \
+    echo 'Apache docker container stopped...' && \
+    echo && \
+    echo 'stopping php...' && \
+    sudo docker stop php && \
+    echo 'php docker container stopped...' && \
+    echo && \
+    echo 'stopping PhpMyAdmin...' && \
+    sudo docker stop phpmyadmin && \
+    echo 'PhpMyAdmin docker container stopped...' && \
+    echo "
+
+alias monitoringstart="echo 'starting Grafana_Loki_Prometheus...' && \
+    echo && \
+    sudo docker start grafana && \
+    echo 'Grafana docker container started...' && \
+    sudo docker start prometheus && \
+    echo 'prometheus docker container started...' && \
+    sudo docker start loki && \
+    echo 'loki docker container started...' && \
+    sudo docker ps  && \
+    echo && \
+    echo 'Monitoring Access IP Address:' && \
+    echo 'grafana IP Address:  127.0.0.1:3000' && \
+    echo 'Grafana Username: admin' && \
+    echo 'Grafana Password: adminpass123456' && \
+    echo 'prometheus IP Address: 127.0.0.1:9090' && \
+    echo 'loki IP Address:  127.0.0.1:3100' && \
+    echo && \
+    echo 'Monitoring Inspect IP Address:' && \
+    gip=\$(sudo docker inspect grafana | grep -Po '\"IPAddress\":\s*\"\K[0-9.]+(?=\")' | head -n 1) && \
+    echo 'grafana IP Address: ' \$gip':3000' && \
+    pip=\$(sudo docker inspect prometheus | grep -Po '\"IPAddress\":\s*\"\K[0-9.]+(?=\")' | head -n 1) && \
+    echo 'prometheus IP Address: ' \$pip':9090' && \
+    lip=\$(sudo docker inspect loki | grep -Po '\"IPAddress\":\s*\"\K[0-9.]+(?=\")' | head -n 1) && \
+    echo 'loki IP Address: ' \$lip':9090' && \
+    echo"
+alias monitoringstop="echo 'stopping Grafana...' && \
+    sudo docker stop grafana && \
+    echo 'grafana docker container stopped...' && \
+    echo && \
+    echo 'stopping  Prometheus...' && \
+    sudo docker stop prometheus && \
+    echo 'Prometheus docker container stopped...' && \
+    echo && \
+    echo 'stopping Loki...' && \
+    sudo docker stop loki && \
+    echo 'Loki docker container stopped...' && \
+    echo "    
+
