@@ -30,7 +30,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - data:/var/lib/mysql
+      - ./mysql-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
       MYSQL_DATABASE: "${DB_NAME}"
@@ -55,7 +55,7 @@ services:
 
   postgres:
     image: postgres:${POSTGRES_VERSION}
-    container_name: postgres
+    container_name: postgresql
     ports:
       - "5432:5432"
     environment:
@@ -79,3 +79,5 @@ services:
 networks:
   backend:
     driver: bridge
+#volumes:
+  #mysql-data:
