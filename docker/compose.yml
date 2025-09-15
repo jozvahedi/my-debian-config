@@ -62,6 +62,8 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PW}
       - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
     networks:
       - backend
     restart: always
@@ -81,3 +83,4 @@ networks:
     driver: bridge
 #volumes:
   #mysql-data:
+  #postgres_data:
