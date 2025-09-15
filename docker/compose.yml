@@ -19,7 +19,7 @@ services:
     image: php:${PHP_VERSION}
     container_name: php
     volumes:
-      - ${PROJECT_ROOT}/:/var/www/html/
+      - ${PROJECT_ROOT}/:/var/www/html/public_html/
       - ${PROJECT_ROOT}/ini:/usr/local/etc/php
     networks:
       - backend
