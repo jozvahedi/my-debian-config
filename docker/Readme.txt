@@ -8,3 +8,12 @@ docker compose logs -f
 docker compose restart php
 docker logs -f <container_id_or_name>
 
+
+Adminer
+postgres
+   System: PostgreSQL
+   Server: postgres
+ mysql
+   System : MySQL
+   Server: mysql
+
