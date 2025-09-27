@@ -83,6 +83,15 @@ services:
     restart: always
     networks: 
       - backend
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+      - postgres
 networks:
   backend:
     driver: bridge
