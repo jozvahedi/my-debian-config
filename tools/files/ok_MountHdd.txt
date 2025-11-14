@@ -1,0 +1,23 @@
+cd /
+mkdir disk1
+mkdir d
+mkdir e
+mkdir f
+#view UUID Hdd and Partition
+sudo blkid
+#view List Hdd And Partion
+sudo fdisk -l
+#change inf file for start automaticlly
+sudo nano /etc/fstab
+sudo systemctl daemon-reload
+sudo mount -a
+
+
+for example
+UUID=D6B0FFD1B0FFB659   /disk1/d        ntfs    defaults        0       2
+UUID=5AB6057BB60558C1   /disk1/e        ntfs    defaults        0       2
+UUID=ACEE1B38EE1AFA72   /disk1/f        ntfs    defaults        0       2
+
+
+
+help from site https://www.linuxbabe.com/desktop-linux/how-to-automount-file-systems-on-linux

@@ -1,0 +1,55 @@
+#alias part 
+alias reload="source ~/.zshrc"
+alias zshrc="vi ~/.zshrc; reload"
+alias status="sudo systemctl status $1"
+alias enable="sudo systemctl enable $1"
+alias restart="sudo systemctl restart $1"
+alias disable="sudo systemctl disable $1"
+alias home='printf "%s\n" "$HOME"'
+alias path='printf "%s\n" "$PATH"'
+alias update="sudo apt update && sudo apt upgrade -y"
+#alias -s txt=nano
+alias install="sudo apt-get install $1"
+alias remove="sudo install -R $1 $2 $3"
+alias ls="eza -a --icons"
+alias ll='eza -al --icons'
+alias lt='eza -a --tree --level=1  --icons'
+#docker
+alias dr="docker"
+alias dri="docker images"
+alias drpl="docker pull"
+alias drps="docker ps"
+alias drpu="docker push"
+alias drr="docker run"
+alias drs="docker search"
+#git
+alias gc='git commit -m'
+alias gp='git'
+alias gpu='git'
+#golang
+alias gob='go build' #Build your code
+alias goc='go clean' # 	Removes object files from package source directories
+alias god='go doc' # 	Prints documentation comments
+alias goe='go env' # 	Prints Go environment information
+alias gof='go fmt' # 	Gofmt formats (aligns and indents) Go programs.
+alias gofa='go fmt ./...' # 	Run go fmt for all packages in current directory, recursively
+alias gofx='go fix' # 	Update packages to use a new API
+alias gog='go get' # 	Downloads packages and then installs them to $GOPATH
+alias goga='go get ./...' # 	Installs all dependencies in current directory, recursively
+alias goi='go install' # 	Compiles and installs packages to $GOPATH
+alias gol='go list' # 	Lists Go packages
+alias gom='go mod' # 	Access to operations on modules
+alias gomt='go mod tidy' # 	Tidies up the go.mod file
+alias gopa='cd $GOPATH' # 	Takes you to $GOPATH
+alias gopb='cd $GOPATH/bin' # 	Takes you to $GOPATH/bin
+alias gops='cd $GOPATH/src' # 	Takes you to $GOPATH/src
+alias gor='go run' # 	Compiles and runs your code
+alias got='go test' # 	Runs tests
+alias gota='go test ./...' # 	Runs tests in all subdirectories
+alias goto='go tool' # 	Prints all the available tools
+alias gotoc='go tool compile' # 	Generates object file
+alias gotod='go tool dist' # 	Utility to bootstrap, build and test go runtime
+alias gotofx='go tool fix' # 	Fixes an application to use newer features
+alias gov='go vet' # 	Vet examines Go source code and reports suspicious constructs
+alias gove='go version' # 	Prints Go version
+alias gow='go work' # 	Work provides access to operations on workspaces

@@ -1,0 +1,9 @@
+ssh-keygen -t rsa -b 4096 -C "jozvahedi@gmail.com"
+cd ~
+cd .ssh
+cat id_rsa.pub 
+add ssh key in github
+test with below command
+ssh -T git@github.com  
+git push -u origin main
+https://www.youtube.com/watch?v=xbj-GCOlfIU

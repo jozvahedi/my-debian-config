@@ -1,0 +1,20 @@
+#nano /etc/apt/source.list
+deb https://ftp.debian.org/debian/ bookworm contrib main non-free non-free-firmware
+# deb-src https://ftp.debian.org/debian/ bookworm contrib main non-free non-free-firmware
+
+deb https://ftp.debian.org/debian/ bookworm-updates contrib main non-free non-free-firmware
+# deb-src https://ftp.debian.org/debian/ bookworm-updates contrib main non-free non-free-firmware
+
+deb https://ftp.debian.org/debian/ bookworm-proposed-updates contrib main non-free non-free-firmware
+# deb-src https://ftp.debian.org/debian/ bookworm-proposed-updates contrib main non-free non-free-firmware
+
+deb https://ftp.debian.org/debian/ bookworm-backports contrib main non-free non-free-firmware
+# deb-src https://ftp.debian.org/debian/ bookworm-backports contrib main non-free non-free-firmware
+
+deb https://security.debian.org/debian-security/ bookworm-security contrib main non-free non-free-firmware
+# deb-src https://security.debian.org/debian-security/ bookworm-security contrib main non-free non-free-firmware
+
+
+
+________
+https://hayhost.am/knowledgebase/349/-How-to-Install-XRDP-Server-Remote-Desktop-on-Debian-11or12.html

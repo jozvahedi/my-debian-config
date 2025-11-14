@@ -1,0 +1,29 @@
+sudo apt remove kde-full
+sudo apt purge kde-full
+
+polybar
+
+https://aidapejman.llqrzqpg.workers.dev/sub/89b3cbba-e6ac-485a-9481-976a0415eab9#BPB-Normal
+https://www.youtube.com/watch?v=v8w1i3wAKiw
+https://github.com/adi1090x/widgets
+https://github.com/elkowar/eww 
+
+bindsym XF86AudioMicMute exec amixer set Capture toggle && amixer get Capture | grep '\[off\]' && notify-send "MIC switched OFF" -i /usr/share/icons/gnome/32x32/status/microphone-sensitivity-muted.png -t 5000
+
+
+bindsym XF86AudioRaiseVolume exec amixer -q set Master 10%+ && mplayer /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
+bindsym XF86AudioLowerVolume exec amixer -q set Master 10%- && mplayer /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
+bindsym XF86AudioMute exec --no-startup-id amixer set 'Master' toggle && mplayer /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
+
+
+
+
+bindsym XF86Messenger workspace 9; exec thunderbird
+
+bindsym XF86MonBrightnessUp exec brightnessctl s +10%;
+bindsym XF86MonBrightnessDown exec brightnessctl s 10%-;
+
+
+
+https://github.com/JaKooLit/Debian-Hyprland
+https://www.youtube.com/watch?v=mmRKWgiPulg
